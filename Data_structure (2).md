@@ -1,0 +1,125 @@
+# Data Catalog for Gold Layer - Port Logistics
+
+## Overview
+
+The Gold Layer is the business-level data representation, structured to support analytical and reporting use cases. It consists of **dimension tables** (static data) and **fact tables** (metrics and transactions) tailored for port logistics optimization and predictive analytics.
+
+---
+
+### 1. **gold.dim_vessels**
+
+* **Purpose:** Stores comprehensive details about vessels, enriched with operational characteristics for logistics planning.
+* **Columns:**
+
+| Column Name | Data Type | Description |
+| --- | --- | --- |
+| vessel_key | INT | Surrogate key uniquely identifying each vessel record. |
+| vessel_imo | NVARCHAR(20) | International Maritime Organization number; identification number for the Vessels. |
+| vessel_type | NVARCHAR(50) | Type of transported contents (e.g., 'Container', 'Bulk Carrier', 'Tanker'). |
+| draft_status | DECIMAL(5,2) | How deep is the vessel in water. |
+
+---
+
+### 2. **gold.dim_ports**
+
+* **Purpose:** Provides information about the ports and their infrastructure attributes.
+* **Columns:**
+
+| Column Name | Data Type | Description |
+| --- | --- | --- |
+| port_key | INT | Surrogate key uniquely identifying each port record. |
+| port_id | NVARCHAR(10) | Unique identifier for the port (e.g., 'EG_ALY', 'EG_DMT'). |
+| latitude | DECIMAL(9,6) | Geographic latitude of the port. |
+| longitude | DECIMAL(9,6) | Geographic longitude of the port. |
+
+---
+
+### 3. **gold.fact_ais_movements**
+
+* **Purpose:** Stores real-time AIS data regarding vessel position, speed, and expected arrival times.
+* **Columns:**
+
+| Column Name | Data Type | Description |
+| --- | --- | --- |
+| movement_id | NVARCHAR(50) | Unique identifier for the vessel movement record. |
+| vessel_key | INT | Foreign key linking to the `dim_vessels` table. |
+| time_key | INT | Surrogate key unique identifier for each time record (format YYYYMMDDHH). |
+| current_lat | DECIMAL(9,6) | Current latitude for the position. |
+| current_lon | DECIMAL(9,6) | Current longitude for the position. |
+| speed_knots | DECIMAL(5,2) | Current speed over ground in knots. |
+| eta_reported | DATETIME | Expected arrival time set by the captain. |
+| waiting_time_hours | DECIMAL(8,2) | Time spent in the anchor before launching. |
+
+---
+
+### 4. **gold.fact_port_conditions**
+
+* **Purpose:** Stores time-series data regarding weather conditions and their impact on port operations.
+* **Columns:**
+
+| Column Name | Data Type | Description |
+| --- | --- | --- |
+| condition_id | INT | Unique identifier for the daily condition record. |
+| port_key | INT | Foreign key linking to the `dim_ports` table. |
+| time_key | INT | Surrogate key unique identifier for each time record (format YYYYMMDDHH). |
+| snapshot_date | DATE | The date of the weather snapshot. |
+| wind_speed_bft | INT | Wind speed in Beaufort scale. |
+| wave_height | DECIMAL(5,2) | Wave height in meters. |
+| visibility_km | DECIMAL(5,2) | Visibility in km; how many kilometers can we see? |
+| port_status | BIT | Port status in binary: 0 = open, 1 = closed because of the weather. |
+
+---
+
+### 5. **gold.fact_port_operations**
+
+* **Purpose:** Stores metrics regarding internal port efficiency and congestion levels.
+* **Columns:**
+
+| Column Name | Data Type | Description |
+| --- | --- | --- |
+| op_id | INT | Unique identifier for the operation record. |
+| port_key | INT | Foreign key linking to the `dim_ports` table. |
+| time_key | INT | Surrogate key unique identifier for each time record (format YYYYMMDDHH). |
+| berth_occupancy_rate | DECIMAL(5,2) | Percent of crowded or occupied berths. |
+| crane_efficiency | INT | Number of cranes that are being emptied. |
+| customs_time_hours | DECIMAL(8,2) | The average time needed for governmental procedures. |
+| cargo_category | NVARCHAR(50) | Agrarian (need fridges), industrial, petroleum. |
+| truck_queue_length | INT | Number of trucks waiting in the port. |
+
+---
+
+### 6. **gold.fact_logistics_costs**
+
+* **Purpose:** Stores financial and route data for GNNs and calculating the 20% savings.
+* **Columns:**
+
+| Column Name | Data Type | Description |
+| --- | --- | --- |
+| cost_id | NVARCHAR(50) | Unique identifier for the cost record. |
+| route_id | NVARCHAR(50) | Identifier for the route used for GNN modeling. |
+| vessel_key | INT | Surrogate key uniquely identifying each vessel record. |
+| time_key | INT | Surrogate key unique identifier for each time record (format YYYYMMDDHH). |
+| daily_demurrage_cost | DECIMAL(12,2) | The penalty for being late in dollars. |
+| fuel_cost_per_km | DECIMAL(12,2) | Fuel cost per kilometers. |
+| perishability_loss_rate | DECIMAL(5,4) | Percentage of losses with respect to the whole profit per hour. |
+| alternative_port_cost | DECIMAL(12,2) | The additional costs for changing directions. |
+
+---
+
+### 7. **gold.dim_time**
+
+* **Purpose:** contains all the details about the dates.
+* This table will be propaply generated by us from the dates we have so that we can have more details than just having the date only.
+* **Columns:**
+
+| Column Name | Data Type | Description |
+| --- | --- | --- |
+| time_key | INT | Surrogate key unique identifier for each time record (format YYYYMMDDHH). |
+| date_actual | DATE | The actual date value. |
+| hour_actual | INT | The hour of the day (0-23). |
+| day_name | NVARCHAR(10) | Name of the day (e.g., 'Monday'). |
+| month_name | NVARCHAR(10) | Name of the month (e.g., 'March'). |
+| quarter | INT | Fiscal quarter (1-4). |
+| year | INT | Calendar year. |
+| shift_name | NVARCHAR(20) | Operational shift (e.g., 'Day', 'Night', 'Morning'). |
+| is_holiday | BIT | Indicates if the day is a holiday (0 = No, 1 = Yes). |
