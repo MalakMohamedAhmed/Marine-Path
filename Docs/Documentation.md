@@ -95,7 +95,7 @@ Rather than stall the project, the team decided to **simulate the full database*
 - **Shift assignment**: Night = hour < 8, Morning = 8–15, Day = 16+
 - **Holiday rate**: 5% of hours randomly flagged as holidays
 
-> **Kaggle Notebook — Data Generation:** [Kaggle Notebook for Generating the Marine Database](https://www.kaggle.com/code/malakmohamed777/generating-the-marine-database)
+> [Kaggle Notebook for Generating the Marine Database](https://www.kaggle.com/code/malakmohamed777/generating-the-marine-database)
 
 #### 1c. Star Schema & Fact Table Assembly
 
@@ -147,7 +147,7 @@ Key insights extracted:
 - Correlation between weather severity (wind × wave height) and waiting time spikes
 - Shift-based operational performance differences (Morning vs. Night shifts)
 
-> **Databricks Analytical Dashboard:** [Interactive Dashboard]((https://app.thebricks.com/file/34b8bb66-766c-4bd6-b71b-bd76e736255b))
+> [Databricks Analytical Dashboard]((https://app.thebricks.com/file/34b8bb66-766c-4bd6-b71b-bd76e736255b))
 
 ---
 
@@ -200,7 +200,7 @@ All models were serialised to files for the deployment stage:
 - `gnn_model_weights.pth` — GNN state dict
 - `preprocessing_config.json` — scaler params, port mapping, feature lists
 
-> **Kaggle Notebook — Model Training:** [Kaggle Notebook for Training Models](https://www.kaggle.com/code/malakmohamed777/marine-models)
+> [Kaggle Notebook for Training Models](https://www.kaggle.com/code/malakmohamed777/marine-models)
 
 ---
 
@@ -233,7 +233,7 @@ This is the main intended production interface. It provides a richer, more stabl
 
 This is the publicly accessible prototype documented in detail throughout this file. It is suitable for demonstration and testing purposes.
 
-> **Live Hugging Face Space (Streamlit App):** [Streamlit app](https://huggingface.co/spaces/MalakMohamed21/Marine_Recommendation_System)
+> [Live Hugging Face Space (Streamlit App)](https://huggingface.co/spaces/MalakMohamed21/Marine_Recommendation_System)
 
 
 ---
