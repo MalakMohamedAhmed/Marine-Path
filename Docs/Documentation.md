@@ -147,7 +147,7 @@ Key insights extracted:
 - Correlation between weather severity (wind × wave height) and waiting time spikes
 - Shift-based operational performance differences (Morning vs. Night shifts)
 
-> [Databricks Analytical Dashboard]((https://app.thebricks.com/file/34b8bb66-766c-4bd6-b71b-bd76e736255b))
+> [Databricks Analytical Dashboard](https://app.thebricks.com/file/34b8bb66-766c-4bd6-b71b-bd76e736255b)
 
 ---
 
