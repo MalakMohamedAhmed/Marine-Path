@@ -663,10 +663,6 @@ The data generation notebook assigned these IDs, which differ from the dashboard
 | `GNN_Y_MEAN` | 13.74 | 13.65 | Mean waiting time used to normalise the GNN target |
 | `GNN_Y_STD` | 11.32 | 13.68 | Std deviation used to normalise the GNN target |
 
-> ⚠️ **Discrepancy:** The constants in `streamlit_app.py` (`GNN_Y_MEAN=13.74`, `GNN_Y_STD=11.32`) differ slightly from the values computed during training (`y_mean=13.65`, `y_std=13.68`). The `y_std` difference (11.32 vs 13.68) will scale denormalised predictions by a factor of ~0.83. If you retrain the GNN, update both constants from `preprocessing_config.json` → `gnn_normalization` → `y_mean` / `y_std`.
-
-Update both if the GNN is retrained.
-
 ---
 
 ## 12. Feature Engineering
