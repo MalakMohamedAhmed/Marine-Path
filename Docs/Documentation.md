@@ -250,7 +250,7 @@ A professional slide deck was created in **Canva** covering:
 #### GitHub Repository
 All project files (notebooks, models, data, and app code) are centralised in a shared **GitHub repository** used for collaboration and version control across the team.
 
-[Github repo](https://github.com/MalakMohamedAhmed/Marine-Path.git)
+> [Github repo](https://github.com/MalakMohamedAhmed/Marine-Path.git)
 ---
 
 ### Workflow Summary
